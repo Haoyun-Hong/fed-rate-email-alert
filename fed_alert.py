@@ -46,8 +46,4 @@ def main():
         print("No Fed update detected.")
 
 if __name__ == "__main__":
-    schedule.every().day.at("07:00").do(main)
-    print("Fed Rate Monitor is running...")
-    while True:
-        schedule.run_pending()
-        time.sleep(60)
+    main()
