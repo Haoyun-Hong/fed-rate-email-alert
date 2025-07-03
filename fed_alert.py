@@ -43,7 +43,8 @@ def main():
     if title:
         send_email(f"[Fed Update] {title}", f"Read more: {link}")
     else:
-        print("No Fed update detected.")
+        send_email(f"[Fed Update] {title}", "No Fed update detected.")
+        #print("No Fed update detected.")
 
 if __name__ == "__main__":
     main()
