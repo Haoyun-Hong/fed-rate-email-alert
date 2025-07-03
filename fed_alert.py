@@ -71,7 +71,7 @@ def main():
             html_lines.append(f'<li><a href="{url}" style="text-decoration:none; color:#1a0dab;">{title}</a></li>')
         html_lines.append('</ul>')
         body = '\n'.join(html_lines)
-        send_email("[Fed Update] Latest Articles", body, html=True)
+        send_email("[Fed Update] Latest Articles", body)
     else:
         send_email("[Fed Update]", "No Fed update detected.")
 
