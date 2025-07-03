@@ -1,4 +1,3 @@
-import requests
 import smtplib
 from email.mime.text import MIMEText
 from datetime import datetime, timedelta
@@ -51,8 +50,11 @@ def check_fed_news():
 
     # return relevant_articles
 
-def send_email(subject, body):
-    msg = MIMEText(body)
+def send_email(subject, body, html=False):
+    if html:
+        msg = MIMEText(body, 'html')
+    else:
+        msg = MIMEText(body)
     msg['Subject'] = subject
     msg['From'] = os.getenv("EMAIL_ADDRESS")
     msg['To'] = os.getenv("TO_EMAIL")
@@ -81,7 +83,7 @@ def main():
             )
         html_lines.append('</ul></div>')
         body = '\n'.join(html_lines)
-        send_email("[Fed Update] Latest Articles", body)
+        send_email("[Fed Update] Latest Articles", body, html=True)
     else:
         send_email("[Fed Update]", "No Fed update detected.")
 
