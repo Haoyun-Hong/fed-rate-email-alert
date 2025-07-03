@@ -3,7 +3,7 @@ name: Fed Rate Alert Daily
 on:
   schedule:
     # Runs every day at 14:00 UTC (adjust time as needed)
-    - cron: '0 14 * * *'
+    - cron: '13 20 * * *' 
   workflow_dispatch:  # Allows manual trigger
 
 jobs:
