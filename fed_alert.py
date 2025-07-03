@@ -3,13 +3,13 @@ import smtplib
 from email.mime.text import MIMEText
 import schedule
 import time
-import config
+import os 
 
 def check_fed_news():
     url = 'https://newsapi.org/v2/everything'
     params = {
         'q': 'federal reserve interest rate',
-        'apiKey': config.NEWS_API_KEY,
+        'apiKey': os.getenv("NEWS_API_KEY"),
         'sortBy': 'publishedAt',
         'language': 'en'
     }
@@ -31,11 +31,11 @@ def check_fed_news():
 def send_email(subject, body):
     msg = MIMEText(body)
     msg['Subject'] = subject
-    msg['From'] = config.EMAIL_ADDRESS
-    msg['To'] = config.TO_EMAIL
+    msg['From'] = os.getenv("EMAIL_ADDRESS")
+    msg['To'] = os.getenv("TO_EMAIL")
 
     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-        smtp.login(config.EMAIL_ADDRESS, config.EMAIL_PASSWORD)
+        smtp.login(os.getenv("EMAIL_ADDRESS"), os.getenv("EMAIL_PASSWORD"))
         smtp.send_message(msg)
 
 def main():
