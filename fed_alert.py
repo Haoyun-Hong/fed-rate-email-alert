@@ -64,12 +64,22 @@ def send_email(subject, body):
 def main():
     articles = check_fed_news()
     if articles:
-        html_lines = ['<h2>Latest Fed News Updates</h2>', '<ul>']
+        html_lines = [
+            '<div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">',
+            '<h2 style="color: #2c3e50;">Latest Fed News Updates</h2>',
+            '<ul style="padding-left: 20px;">'
+        ]
         for article in articles:
             title = article['title']
             url = article['url']
-            html_lines.append(f'<li><a href="{url}" style="text-decoration:none; color:#1a0dab;">{title}</a></li>')
-        html_lines.append('</ul>')
+            html_lines.append(
+                f'<li style="margin-bottom: 12px;">'
+                f'<a href="{url}" '
+                f'style="color: #1a73e8; text-decoration: none; font-weight: 600;" '
+                f'target="_blank" rel="noopener noreferrer">{title}</a>'
+                f'</li>'
+            )
+        html_lines.append('</ul></div>')
         body = '\n'.join(html_lines)
         send_email("[Fed Update] Latest Articles", body)
     else:
