@@ -5,36 +5,51 @@ from datetime import datetime, timedelta
 import os 
 
 def check_fed_news():
-    url = 'https://newsapi.org/v2/everything'
-    time_24h_ago = datetime.utcnow() - timedelta(days=1)
-    from_time = time_24h_ago.strftime("%Y-%m-%dT%H:%M:%SZ")
+    # Mock data simulating NewsAPI articles with Fed rate news
+    return [
+        {
+            "title": "Federal Reserve raises interest rates by 0.25%",
+            "url": "https://www.example.com/fed-raises-rates"
+        },
+        {
+            "title": "Fed signals pause on further rate hikes",
+            "url": "https://www.example.com/fed-pauses"
+        },
+        {
+            "title": "Inflation concerns lead Fed to hold rates steady",
+            "url": "https://www.example.com/fed-holds-rates"
+        },
+    ]
+    # url = 'https://newsapi.org/v2/everything'
+    # time_24h_ago = datetime.utcnow() - timedelta(days=1)
+    # from_time = time_24h_ago.strftime("%Y-%m-%dT%H:%M:%SZ")
 
-    params = {
-        'q': 'federal reserve interest rate',
-        'apiKey': os.getenv("NEWS_API_KEY"),
-        'sortBy': 'publishedAt',
-        "from": from_time,
-        'language': 'en'
-    }
+    # params = {
+    #     'q': 'federal reserve interest rate',
+    #     'apiKey': os.getenv("NEWS_API_KEY"),
+    #     'sortBy': 'publishedAt',
+    #     "from": from_time,
+    #     'language': 'en'
+    # }
 
-    response = requests.get(url, params=params)
-    if response.status_code != 200:
-        print(f"Error fetching news: {response.status_code}")
-        return []
+    # response = requests.get(url, params=params)
+    # if response.status_code != 200:
+    #     print(f"Error fetching news: {response.status_code}")
+    #     return []
 
-    data = response.json()
-    articles = data.get("articles", [])
+    # data = response.json()
+    # articles = data.get("articles", [])
 
-    keywords = ["raise", "cut", "hike", "lower", "increase", "decrease", 
-                "hold", "unchanged", "pause", "steady", "keeps", "maintain"]
+    # keywords = ["raise", "cut", "hike", "lower", "increase", "decrease", 
+    #             "hold", "unchanged", "pause", "steady", "keeps", "maintain"]
 
-    relevant_articles = []
-    for article in articles:
-        title = article['title'].lower()
-        if any(kw in title for kw in keywords):
-            relevant_articles.append(article)
+    # relevant_articles = []
+    # for article in articles:
+    #     title = article['title'].lower()
+    #     if any(kw in title for kw in keywords):
+    #         relevant_articles.append(article)
 
-    return relevant_articles
+    # return relevant_articles
 
 def send_email(subject, body):
     msg = MIMEText(body)
