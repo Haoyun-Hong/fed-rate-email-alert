@@ -1,57 +1,40 @@
 import smtplib
+import requests
 from email.mime.text import MIMEText
 from datetime import datetime, timedelta
 import os 
 
 def check_fed_news():
-    # Mock data simulating NewsAPI articles with Fed rate news
-    return [
-        {
-            "title": "Solid Jobs Report Keeps Fed Rate Cuts at Bay",
-            "url": "https://www.nytimes.com/2025/07/03/business/jobs-fed-rate-cuts.html",
-            "source": "NY Times"
-        },
-        {
-            "title": "Powell confirms that the Fed would have cut by now were it not for tariffs",
-            "url": "https://www.cnbc.com/2025/07/01/powell-confirms-that-the-fed-would-have-cut-by-now-were-it-not-for-tariffs.html",
-            "source:": "CNBC"
-        },
-        {
-            "title": "US dollar rises, British pound falls as markets weigh trade deals, Fed rate cut",
-            "url": "https://www.reuters.com/world/middle-east/dollar-wallows-near-3-12-year-low-fed-cuts-trump-bill-focus-2025-07-02/",
-            "source": "resuters"
-        },
-    ]
-    # url = 'https://newsapi.org/v2/everything'
-    # time_24h_ago = datetime.utcnow() - timedelta(days=1)
-    # from_time = time_24h_ago.strftime("%Y-%m-%dT%H:%M:%SZ")
+    url = 'https://newsapi.org/v2/everything'
+    time_24h_ago = datetime.utcnow() - timedelta(days=1)
+    from_time = time_24h_ago.strftime("%Y-%m-%dT%H:%M:%SZ")
 
-    # params = {
-    #     'q': 'federal reserve interest rate',
-    #     'apiKey': os.getenv("NEWS_API_KEY"),
-    #     'sortBy': 'publishedAt',
-    #     "from": from_time,
-    #     'language': 'en'
-    # }
+    params = {
+        'q': 'federal reserve interest rate',
+        'apiKey': os.getenv("NEWS_API_KEY"),
+        'sortBy': 'publishedAt',
+        "from": from_time,
+        'language': 'en'
+    }
 
-    # response = requests.get(url, params=params)
-    # if response.status_code != 200:
-    #     print(f"Error fetching news: {response.status_code}")
-    #     return []
+    response = requests.get(url, params=params)
+    if response.status_code != 200:
+        print(f"Error fetching news: {response.status_code}")
+        return []
 
-    # data = response.json()
-    # articles = data.get("articles", [])
+    data = response.json()
+    articles = data.get("articles", [])
 
-    # keywords = ["raise", "cut", "hike", "lower", "increase", "decrease", 
-    #             "hold", "unchanged", "pause", "steady", "keeps", "maintain"]
+    keywords = ["raise", "cut", "hike", "lower", "increase", "decrease", 
+                "hold", "unchanged", "pause", "steady", "keeps", "maintain"]
 
-    # relevant_articles = []
-    # for article in articles:
-    #     title = article['title'].lower()
-    #     if any(kw in title for kw in keywords):
-    #         relevant_articles.append(article)
+    relevant_articles = []
+    for article in articles:
+        title = article['title'].lower()
+        if any(kw in title for kw in keywords):
+            relevant_articles.append(article)
 
-    # return relevant_articles
+    return relevant_articles
 
 def send_email(subject, body, html=False):
     if html:
