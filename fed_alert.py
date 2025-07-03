@@ -18,7 +18,7 @@ def check_fed_news():
         },
         {
             "title": "US dollar rises, British pound falls as markets weigh trade deals, Fed rate cut",
-            "url": "https://www.reuters.com/world/middle-east/dollar-wallows-near-3-12-year-low-fed-cuts-trump-bill-focus-2025-07-02/"
+            "url": "https://www.reuters.com/world/middle-east/dollar-wallows-near-3-12-year-low-fed-cuts-trump-bill-focus-2025-07-02/",
             "source": "resuters"
         },
     ]
