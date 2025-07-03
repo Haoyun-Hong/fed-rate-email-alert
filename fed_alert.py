@@ -8,16 +8,16 @@ def check_fed_news():
     # Mock data simulating NewsAPI articles with Fed rate news
     return [
         {
-            "title": "Federal Reserve raises interest rates by 0.25%",
-            "url": "https://www.example.com/fed-raises-rates"
+            "title": "Solid Jobs Report Keeps Fed Rate Cuts at Bay",
+            "url": "https://www.nytimes.com/2025/07/03/business/jobs-fed-rate-cuts.html"
         },
         {
-            "title": "Fed signals pause on further rate hikes",
-            "url": "https://www.example.com/fed-pauses"
+            "title": "Powell confirms that the Fed would have cut by now were it not for tariffs",
+            "url": "https://www.cnbc.com/2025/07/01/powell-confirms-that-the-fed-would-have-cut-by-now-were-it-not-for-tariffs.html"
         },
         {
-            "title": "Inflation concerns lead Fed to hold rates steady",
-            "url": "https://www.example.com/fed-holds-rates"
+            "title": "US dollar rises, British pound falls as markets weigh trade deals, Fed rate cut",
+            "url": "https://www.reuters.com/world/middle-east/dollar-wallows-near-3-12-year-low-fed-cuts-trump-bill-focus-2025-07-02/"
         },
     ]
     # url = 'https://newsapi.org/v2/everything'
