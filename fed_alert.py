@@ -1,32 +1,40 @@
 import requests
 import smtplib
 from email.mime.text import MIMEText
-import schedule
-import time
+from datetime import datetime, timedelta
 import os 
 
 def check_fed_news():
     url = 'https://newsapi.org/v2/everything'
+    time_24h_ago = datetime.utcnow() - timedelta(days=1)
+    from_time = time_24h_ago.strftime("%Y-%m-%dT%H:%M:%SZ")
+
     params = {
         'q': 'federal reserve interest rate',
         'apiKey': os.getenv("NEWS_API_KEY"),
         'sortBy': 'publishedAt',
+        "from": from_time,
         'language': 'en'
     }
-    response = requests.get(url, params=params)
-    articles = response.json().get('articles', [])
 
-    for article in articles[:5]:  # Limit to latest 5 articles
+    response = requests.get(url, params=params)
+    if response.status_code != 200:
+        print(f"Error fetching news: {response.status_code}")
+        return []
+
+    data = response.json()
+    articles = data.get("articles", [])
+
+    keywords = ["raise", "cut", "hike", "lower", "increase", "decrease", 
+                "hold", "unchanged", "pause", "steady", "keeps", "maintain"]
+
+    relevant_articles = []
+    for article in articles:
         title = article['title'].lower()
-         # Detect rate change types
-        if 'raises rates' in title or 'rate hike' in title or 'increases rates' in title:
-            return "[Fed Raises Rates] " + article['title'], article['url']
-        elif 'cuts rates' in title or 'lowers rates' in title or 'reduces rates' in title:
-            return "[Fed Cuts Rates] " + article['title'], article['url']
-        elif 'keeps rates' in title or 'holds rates' in title or 'leaves rates unchanged' in title or 'maintains rates' in title:
-            return "[Fed Holds Steady] " + article['title'], article['url']
-        
-    return None, None
+        if any(kw in title for kw in keywords):
+            relevant_articles.append(article)
+
+    return relevant_articles
 
 def send_email(subject, body):
     msg = MIMEText(body)
@@ -39,12 +47,18 @@ def send_email(subject, body):
         smtp.send_message(msg)
 
 def main():
-    title, link = check_fed_news()
-    if title:
-        send_email(f"[Fed Update] {title}", f"Read more: {link}")
+    articles = check_fed_news()
+    if articles:
+        html_lines = ['<h2>Latest Fed News Updates</h2>', '<ul>']
+        for article in articles:
+            title = article['title']
+            url = article['url']
+            html_lines.append(f'<li><a href="{url}" style="text-decoration:none; color:#1a0dab;">{title}</a></li>')
+        html_lines.append('</ul>')
+        body = '\n'.join(html_lines)
+        send_email("[Fed Update] Latest Articles", body, html=True)
     else:
-        send_email(f"[Fed Update]", "No Fed update detected.")
-        #print("No Fed update detected.")
+        send_email("[Fed Update]", "No Fed update detected.")
 
 if __name__ == "__main__":
     main()
