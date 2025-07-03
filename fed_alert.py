@@ -8,15 +8,18 @@ def check_fed_news():
     return [
         {
             "title": "Solid Jobs Report Keeps Fed Rate Cuts at Bay",
-            "url": "https://www.nytimes.com/2025/07/03/business/jobs-fed-rate-cuts.html"
+            "url": "https://www.nytimes.com/2025/07/03/business/jobs-fed-rate-cuts.html",
+            "source": "NY Times"
         },
         {
             "title": "Powell confirms that the Fed would have cut by now were it not for tariffs",
-            "url": "https://www.cnbc.com/2025/07/01/powell-confirms-that-the-fed-would-have-cut-by-now-were-it-not-for-tariffs.html"
+            "url": "https://www.cnbc.com/2025/07/01/powell-confirms-that-the-fed-would-have-cut-by-now-were-it-not-for-tariffs.html",
+            "source:": "CNBC"
         },
         {
             "title": "US dollar rises, British pound falls as markets weigh trade deals, Fed rate cut",
             "url": "https://www.reuters.com/world/middle-east/dollar-wallows-near-3-12-year-low-fed-cuts-trump-bill-focus-2025-07-02/"
+            "source": "resuters"
         },
     ]
     # url = 'https://newsapi.org/v2/everything'
