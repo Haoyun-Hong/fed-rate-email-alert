@@ -1,4 +1,4 @@
-ame: Fed Rate Alert Daily
+name: Fed Rate Alert Daily
 
 on:
   schedule:
