@@ -74,11 +74,13 @@ def main():
         for article in articles:
             title = article['title']
             url = article['url']
+            source = article.get('source', {}).get('name', 'Unknown Source')
             html_lines.append(
                 f'<li style="margin-bottom: 12px;">'
                 f'<a href="{url}" '
                 f'style="color: #1a73e8; text-decoration: none; font-weight: 600;" '
                 f'target="_blank" rel="noopener noreferrer">{title}</a>'
+                f'<br><small style="color: #555;">Source: {source}</small>'
                 f'</li>'
             )
         html_lines.append('</ul></div>')
