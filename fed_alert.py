@@ -6,8 +6,8 @@ import os
 
 def check_fed_news():
     url = 'https://newsapi.org/v2/everything'
-    time_24h_ago = datetime.utcnow() - timedelta(days=1)
-    from_time = time_24h_ago.strftime("%Y-%m-%dT%H:%M:%SZ")
+    #time_24h_ago = datetime.utcnow() - timedelta(days=1)
+    #from_time = time_24h_ago.strftime("%Y-%m-%dT%H:%M:%SZ")
 
     params = {
         'q': 'federal reserve interest rate',
